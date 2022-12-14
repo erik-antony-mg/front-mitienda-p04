@@ -1,0 +1,180 @@
+<div class="container" *ngIf="formulario">
+  <h1>{{ libro ? "Editar libro" : "Nuevo libro" }}</h1>
+  <div class="mt-5 alert alert-danger">
+    {{ formulario.value | json }}
+  </div>
+
+  <div class="row">
+    <form
+      class="mt-5 col-md-6"
+      [formGroup]="formulario"
+      autocomplete=""
+      (ngSubmit)="guardar()"
+    >
+      <mat-form-field class="mb-2 w-100" appearance="outline">
+        <mat-label>Título</mat-label>
+        <input
+          matInput
+          id="title"
+          type="text"
+          placeholder="Título"
+          formControlName="titulo"
+          (keyup)="generarSlug()"
+        />
+        <mat-error>
+          <ng-container *ngIf="controlTieneError('titulo', 'required')">
+            Este campo es obligatorio
+          </ng-container>
+          <ng-container *ngIf="controlTieneError('titulo', 'minlength')">
+            Debe tener almenos 3 caracteres
+          </ng-container>
+          <ng-container *ngIf="controlTieneError('titulo', 'maxlength')">
+            Debe tener alomucho 40 caracteres
+          </ng-container>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="mb-2 w-100" appearance="outline">
+        <mat-label>Slug</mat-label>
+        <input
+          matInput
+          id="slug"
+          type="text"
+          placeholder="Slug"
+          formControlName="slug"
+          readonly
+        />
+        <mat-error>
+          <ng-container *ngIf="controlTieneError('slug', 'required')">
+            Este campo es obligatorio
+          </ng-container>
+          <ng-container *ngIf="controlTieneError('slug', 'pattner')">
+            debe tener el valo correcto
+          </ng-container>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="mb-2 w-100" appearance="outline">
+        <mat-label for="descripcion">Descripción</mat-label>
+        <textarea
+          matInput
+          id="descripcion"
+          placeholder="Descripción"
+          formControlName="descripcion"
+        ></textarea>
+        <mat-error>
+          <ng-container *ngIf="controlTieneError('descripcion', 'required')">
+            Este campo es obligatorio
+          </ng-container>
+          <ng-container *ngIf="controlTieneError('descripcion', 'minlenght')">
+            debe tener al menos 10 caracteres
+          </ng-container>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="mb-2 w-100" appearance="outline">
+        <mat-label>Precio</mat-label>
+        <input
+          id="precio"
+          type="number"
+          step="0.01"
+          placeholder="0"
+          class="example-left-align"
+          matInput
+          formControlName="precio"
+        />
+        <span matTextPrefix>$&nbsp;</span>
+        <mat-error>
+          <ng-container *ngIf="controlTieneError('precio', 'required')">
+            Este campo es obligatorio
+          </ng-container>
+          <ng-container *ngIf="controlTieneError('precio', 'min')">
+            El valor debe ser mayor a 0
+          </ng-container>
+        </mat-error>
+      </mat-form-field>
+      <!-- ARCHIVO PORTADA IMAGE  -->
+      <div class="mb-2">
+        <label class="d-block mb-2">Portada</label>
+        <button
+          type="button"
+          mat-raised-button
+          (click)="archivoPortadaInput.click()"
+        >
+          selecione un archivo
+        </button>
+
+        <div *ngIf="formulario.controls['rutaPortada'].valid">
+          El archivo ha sido subido:
+          {{ formulario.controls["rutaPortada"].value }}
+        </div>
+
+        <mat-error>
+          <ng-container *ngIf="controlTieneError('rutaPortada', 'required')">
+            Este campo es obligatorio
+          </ng-container>
+        </mat-error>
+        <input
+          type="file"
+          accept="image/*"
+          class="d-none"
+          #archivoPortadaInput
+          (change)="subirArchivo($event, 'rutaPortada')"
+        />
+      </div>
+      <!-- ARCHIVO PDF  -->
+      <div class="mb-2">
+        <label class="d-block mb-2">Archivo PDF</label>
+        <button
+          type="button"
+          mat-raised-button
+          (click)="archivoPDFInput.click()"
+        >
+          selecione un archivo
+        </button>
+        <div *ngIf="formulario.controls['rutaArchivo'].valid">
+          El archivo ha sido subido:
+          {{ formulario.controls["rutaArchivo"].value }}
+        </div>
+        <mat-error>
+          <ng-container *ngIf="controlTieneError('rutaArchivo', 'required')">
+            Este campo es obligatorio
+          </ng-container>
+        </mat-error>
+        <input
+          type="file"
+          accept="application/pdf"
+          class="d-none"
+          #archivoPDFInput
+          (change)="subirArchivo($event, 'rutaArchivo')"
+        />
+      </div>
+
+      <div class="text-end">
+        <button
+          mat-button
+          color="accent"
+          type="button"
+          routerLink="/admin/libros"
+        >
+          Cancelar
+        </button>
+        <button class="ms-2" mat-raised-button color="primary">
+          {{ libro ? "Actualizar " : "Guardar " }}libro
+        </button>
+      </div>
+    </form>
+    <div class="col-md-6 text-center">
+      <div class="p-5">
+        <div
+          *ngIf="formulario.controls['rutaPortada'].value; else sinRutaPortada"
+        >
+          <img
+            [src]="formulario.controls['rutaPortada'].value | apiImg"
+            alt=""
+          />
+        </div>
+
+        <ng-template #sinRutaPortada>Sin Portada</ng-template>
+      </div>
+    </div>
+  </div>
+</div>

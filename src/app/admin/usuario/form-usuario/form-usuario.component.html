@@ -1,0 +1,114 @@
+<div class="container" *ngIf="formulario">
+  <h1>{{ usuario ? "Editar usuario" : "Nuevo usuario" }}</h1>
+
+  <form
+    class="mt-5"
+    [formGroup]="formulario"
+    autocomplete=""
+    (ngSubmit)="guardar()"
+  >
+    <!-- CAMPO NOMBRES -->
+    <mat-form-field class="mb-2 w-100" appearance="outline">
+      <mat-label>Nombres</mat-label>
+      <input
+        matInput
+        id="nombres"
+        type="text"
+        placeholder="Nombres"
+        formControlName="nombres"
+      />
+      <mat-error>
+        <ng-container *ngIf="controlTieneError('nombres', 'required')">
+          Este campo es obligatorio
+        </ng-container>
+        <ng-container *ngIf="controlTieneError('nombres', 'maxlength')">
+          Debe tener alomucho 40 caracteres
+        </ng-container>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- CAMPO APELLIDOS -->
+    <mat-form-field class="mb-2 w-100" appearance="outline">
+      <mat-label>Apellidos</mat-label>
+      <input
+        matInput
+        id="apellidos"
+        type="text"
+        placeholder="Apellidos"
+        formControlName="apellidos"
+      />
+      <mat-error>
+        <ng-container *ngIf="controlTieneError('apellidos', 'required')">
+          Este campo es obligatorio
+        </ng-container>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- CAMPO EMAIL -->
+    <mat-form-field class="mb-2 w-100" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        id="email"
+        type="email"
+        placeholder="Email"
+        formControlName="email"
+      />
+      <mat-error>
+        <ng-container *ngIf="controlTieneError('email', 'required')">
+          Este campo es obligatorio </ng-container
+        ><ng-container *ngIf="controlTieneError('email', 'email')">
+          formato email
+        </ng-container>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- CAMPO PASSWORD -->
+    <mat-form-field class="mb-2 w-100" appearance="outline">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        id="password"
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <mat-error>
+        <ng-container *ngIf="controlTieneError('password', 'required')">
+          Este campo es obligatorio
+        </ng-container>
+        <ng-container *ngIf="controlTieneError('password', 'minlegth')">
+          Debe tener mas de una letra
+        </ng-container>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- CAMPO ROLL  -->
+    <mat-form-field class="mb-2 w-100" appearance="outline">
+      <mat-label>elija un rol</mat-label>
+      <mat-select formControlName="rol">
+        <mat-option value="LECTOR">LECTOR</mat-option>
+        <mat-option value="ADMIN">ADMIN </mat-option>
+      </mat-select>
+      <mat-error *ngIf="controlTieneError('rol', 'required')"
+        >este campo es obligatorio</mat-error
+      >
+    </mat-form-field>
+
+    <div class="mb-2">
+      <div class="text-end">
+        <button
+          mat-button
+          type="button"
+          class="btn btn-light"
+          routerLink="/admin/usuarios"
+        >
+          Cancelar
+        </button>
+        <button class="ms-2" mat-raised-button color="primary">
+          {{ usuario ? "Actualizar " : "Guardar " }}usuario
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
