@@ -1,0 +1,40 @@
+<div class="container" *ngIf="libro">
+  <div class="row">
+    <div class="col-md-6">
+      <img [src]="libro.rutaPortada! | apiImg" alt="" class="w-90 px-4" />
+    </div>
+    <div class="col-md-6">
+      <h1 class="fw-bold">{{ libro.titulo }}</h1>
+      <p>{{libro.descripcion}</p>
+      <div>
+        <span class="fw-bold">Formato disponible:</span>
+        <span class="ms-1">PDF</span>
+      </div>
+      <div class="mt-2">
+        <span class="fw-bold">Precio:</span>
+        <span class="ms-1 fw-bold text-danger display-5">
+          {{ libro.precio | currency }}
+        </span>
+      </div>
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="agregarAlCarrito(libro)"
+          *ngIf="!existeItemEnElCarrito(libro); else removerButton"
+        >
+          <mat-icon>add_shopping_cart</mat-icon>Agregar al carrito
+        </button>
+        <ng-template #removerButton>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="removerItemDelCarrito(libro)"
+          >
+            <mat-icon>remove_shopping_cart</mat-icon>Remover al carrito
+          </button>
+        </ng-template>
+      </mat-card-actions>
+    </div>
+  </div>
+</div>

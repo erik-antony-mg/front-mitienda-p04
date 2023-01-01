@@ -1,0 +1,50 @@
+<mat-toolbar>
+  <span>Mi tienda Online</span>
+  <button mat-button routerLink="" class="ms-3">Inicio</button>
+  <button mat-button routerLink="/libros" class="ms-3">Libros</button>
+  <button mat-button routerLink="/admin/libros" class="ms-3">
+    Administrar libros
+  </button>
+  <button mat-button routerLink="/admin/usuarios" class="ms-3">
+    Administrar usuarios
+  </button>
+  <button
+    mat-button
+    [matMenuTriggerFor]="menuCarrito"
+    [matBadge]="items.length"
+  >
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+  <mat-menu #menuCarrito="matMenu">
+    <ng-container *ngIf="items.length > 0; else sinItems">
+      <button mat-menu-item *ngFor="let item of items" class="carrito-item">
+        <div class="d-flex gap-3">
+          <img
+            [src]="item.rutaPortada! | apiImg"
+            alt=""
+            style="max-width: 64px"
+          />
+          <div class="info">
+            <div class="fw-bold mb-1">
+              {{ item.titulo }}
+            </div>
+            <div class="fw-bold mb-1">
+              {{ item.precio | currency }}
+            </div>
+          </div>
+        </div>
+      </button>
+      <button
+        routerLink="/carrito"
+        mat-menu-item
+        class="justify-content-center"
+      >
+        ir al carrito
+      </button>
+    </ng-container>
+    <ng-template #sinItems>
+      <button mat-menu-item class="text-center">El carrito esta vacio</button>
+    </ng-template>
+  </mat-menu>
+</mat-toolbar>
+<router-outlet></router-outlet>

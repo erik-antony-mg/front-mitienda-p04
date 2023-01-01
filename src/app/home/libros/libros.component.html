@@ -1,0 +1,10 @@
+<div class="container mt-5">
+  <h1 class="fw-bold">Todos nuestros libros</h1>
+  <div infiniteScroll (scrolled)="cargarMasLibros()">
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let libro of libros">
+        <app-tarjeta-libro [libro]="libro"></app-tarjeta-libro>
+      </div>
+    </div>
+  </div>
+</div>

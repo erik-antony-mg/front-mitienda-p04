@@ -1,0 +1,30 @@
+<mat-card class="libro-card">
+  <img [src]="libro.rutaPortada! | apiImg" [alt]="libro.titulo" />
+  <mat-card-content>
+    <h4>
+      <a [routerLink]="['/libros', libro.slug]">{{ libro.titulo }}</a>
+    </h4>
+    <p>{{ libro.descripcion | slice : 0 : 50 }}...</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      mat-raised-button
+      color="primary"
+      class="w-100"
+      (click)="agregarAlCarrito(libro)"
+      *ngIf="!existeItemEnElCarrito(libro); else removerButton"
+    >
+      <mat-icon>add_shopping_cart</mat-icon>Agregar al carrito
+    </button>
+    <ng-template #removerButton>
+      <button
+        mat-raised-button
+        color="warn"
+        class="w-100"
+        (click)="removerItemDelCarrito(libro)"
+      >
+        <mat-icon>remove_shopping_cart</mat-icon>Remover al carrito
+      </button>
+    </ng-template>
+  </mat-card-actions>
+</mat-card>
