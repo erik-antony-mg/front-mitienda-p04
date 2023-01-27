@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Libro, LibroPage } from '../../admin/libros/shared/libro.model';
 import { enviroment } from 'src/environments/enviroment';
 import { Observable } from 'rxjs';
+import { Venta } from '../../home/shared/venta.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,25 @@ export class HomeService {
   }
   getLibroSlug(slug: string): Observable<Libro> {
     return this.http.get<Libro>(`${enviroment.apiBase}/libros/${slug}`);
+  }
+
+  crearPagoPaypal(idLibros: number[]): Observable<any> {
+    const urlRetorno = 'http://localhost:4200/carrito'
+    return this.http.post<any>(`${enviroment.apiBase}/pago/paypal/crear?urlRetorno=${urlRetorno}`, idLibros);
+  }
+
+  capturarPagoPaypal(token: string): Observable<any> {
+
+    return this.http.post<any>(`${enviroment.apiBase}/pago/paypal/capturar?token=${token}`, null);
+  }
+
+  getVenta(idVenta: number): Observable<Venta> {
+    return this.http.get<Venta>(`${enviroment.apiBase}/ventas/${idVenta}`);
+  }
+
+  descargarArchivoItemVenta(idVenta: number, idItemVenta: number) {
+    return this.http.get(`${enviroment.apiBase}/ventas/${idVenta}/items/${idItemVenta}/archivo/descargar`, {
+      responseType: 'blob'
+    })
   }
 }

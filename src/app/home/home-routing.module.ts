@@ -5,6 +5,7 @@ import { HomeLayoutComponent } from './home-layout/home-layout.component';
 import { LibrosComponent } from './libros/libros.component';
 import { DetallesLibroComponent } from './detalles-libro/detalles-libro.component';
 import { CarritoComponent } from './carrito/carrito.component';
+import { DetallesVentaComponent } from './detalles-venta/detalles-venta.component';
 
 
 const routes: Routes = [
@@ -27,7 +28,12 @@ const routes: Routes = [
       {
         path: 'carrito',
         component: CarritoComponent
+      },
+      {
+        path: 'detalles-venta/:idVenta',
+        component: DetallesVentaComponent
       }
+
     ]
   }
 

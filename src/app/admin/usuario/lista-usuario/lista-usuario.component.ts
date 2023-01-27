@@ -24,6 +24,10 @@ export class ListaUsuarioComponent implements OnInit {
     this.usuarioService.paginarUsuario(sise, page)
       .subscribe(resp => {
         this.usuarioPage = resp;
+        console.log(sise);
+        console.log(page);
+
+
       })
   }
 

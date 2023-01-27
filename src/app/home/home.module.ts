@@ -10,6 +10,7 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { TarjetaLibroComponent } from './shared/tarjeta-libro/tarjeta-libro.component';
 import { DetallesLibroComponent } from './detalles-libro/detalles-libro.component';
 import { CarritoComponent } from './carrito/carrito.component';
+import { DetallesVentaComponent } from './detalles-venta/detalles-venta.component';
 
 
 
@@ -20,7 +21,8 @@ import { CarritoComponent } from './carrito/carrito.component';
     LibrosComponent,
     TarjetaLibroComponent,
     DetallesLibroComponent,
-    CarritoComponent
+    CarritoComponent,
+    DetallesVentaComponent
   ],
   imports: [
     CommonModule,

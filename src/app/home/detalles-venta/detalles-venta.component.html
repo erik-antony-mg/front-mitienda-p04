@@ -1,0 +1,59 @@
+<div class="container" *ngIf="venta">
+  <h1 class="fw-bold">Dettales de venta</h1>
+  <div class="row mt-3 justify-content-between">
+    <div class="col-md-6">
+      <h3 class="fw-bold">Ítems de la Venta</h3>
+
+      <div *ngFor="let item of venta.items" class="carrito-item">
+        <div class="d-flex gap-3">
+          <img
+            [src]="item.libro.rutaPortada! | apiImg"
+            alt=""
+            style="max-width: 64px"
+          />
+          <div class="info">
+            <div class="fw-bold mb-1">
+              {{ item.libro.titulo }}
+            </div>
+            <div class="fw-bold mb-1">
+              {{ item.libro.precio | currency }}
+              <button
+                mat-button
+                color="warn"
+                (click)="descargarArchivo(item)"
+                [disabled]="item.numeroDescargasDisponibles < 1"
+              >
+                descargar PDF
+              </button>
+              <span class="ms-2">
+                {{ item.numeroDescargasDisponibles }}
+                {{
+                  item.numeroDescargasDisponibles
+                    | i18nPlural
+                      : {
+                          "=1": "descarga disponible",
+                          other: "descargas disponibles"
+                        }
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-lg-3">
+      <h3 class="fw-bold">Resumen</h3>
+      <h5 class="fw-bold text-end">Total</h5>
+      <div
+        class="fw-bold text-end my-3"
+        style="font-size: 200%; color: #ff535b"
+      >
+        {{ venta.total | currency }}
+      </div>
+
+      <button class="w-100 mt-3" mat-button routerLink="/libros">
+        Seguir comprando
+      </button>
+    </div>
+  </div>
+</div>
